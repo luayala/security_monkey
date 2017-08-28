@@ -147,12 +147,6 @@ class ResourcePolicyAuditor(Auditor):
         Returns:
             list of Policy objects
         """
-
-        if self.policy_keys == 'root':
-            # SQS does not currently put Policy inside a policy block.
-            # TODO: Refactor SQS to have Policy section
-            return [Policy(item.config)]
-
         policies = list()
         for key in self.policy_keys:
             try:
