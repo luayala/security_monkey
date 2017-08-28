@@ -31,4 +31,4 @@ class SQSAuditor(ResourcePolicyAuditor):
 
     def __init__(self, accounts=None, debug=False):
         super(SQSAuditor, self).__init__(accounts=accounts, debug=debug)
-        self.policy_keys = 'root'
+        self.policy_keys = ['Policy']
