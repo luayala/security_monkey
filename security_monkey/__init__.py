@@ -23,7 +23,7 @@ import os
 import stat
 
 ### VERSION ###
-__version__ = '0.9.2'
+__version__ = '0.9.3'
 
 ### FLASK ###
 from flask import Flask
@@ -114,6 +114,9 @@ rbac.exempt(reset_password)
 rbac.exempt(forgot_password)
 rbac.exempt(change_password)
 rbac.exempt(healthcheck)
+
+### Sentry definition ###
+sentry = None
 
 ### FLASK API ###
 from flask_restful import Api
@@ -335,3 +338,12 @@ def setup_logging():
 
 
 setup_logging()
+
+
+### Sentry ###
+try:
+    from raven.contrib.flask import Sentry
+    sentry = Sentry()
+    sentry.init_app(app)
+except ImportError as e:
+    app.logger.debug('Sentry not installed, skipping...')
