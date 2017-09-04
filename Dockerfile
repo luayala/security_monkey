@@ -16,7 +16,7 @@
 FROM ubuntu:14.04
 MAINTAINER Netflix Open Source Development <talent@netflix.com>
 
-ENV SECURITY_MONKEY_VERSION=v0.9.2 \
+ENV SECURITY_MONKEY_VERSION=v0.9.3 \
     SECURITY_MONKEY_SETTINGS=/usr/local/src/security_monkey/env-config/config-docker.py
 
 RUN apt-get update &&\
@@ -27,6 +27,8 @@ RUN apt-get update &&\
 RUN pip install setuptools --upgrade
 RUN pip install pip --upgrade
 RUN pip install "urllib3[secure]" --upgrade
+RUN pip install google-compute-engine
+RUN pip install cloudaux\[gcp\]
 
 RUN cd /usr/local/src &&\
 #   git clone --branch $SECURITY_MONKEY_VERSION https://github.com/Netflix/security_monkey.git

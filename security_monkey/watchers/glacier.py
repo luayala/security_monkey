@@ -20,14 +20,13 @@
 
 """
 
-from boto.glacier import regions
-from security_monkey.cloudaux_batched_watcher import CloudAuxBatchedWatcher
+from security_monkey.cloudaux_batched_watcher import CloudAuxWatcher
 
 from cloudaux.aws.glacier import list_vaults
 from cloudaux.orchestration.aws.glacier import get_vault
 
 
-class GlacierVault(CloudAuxBatchedWatcher):
+class GlacierVault(CloudAuxWatcher):
     index = 'vault'
     i_am_singular = 'Glacier Vault'
     i_am_plural = 'Glacier Vaults'
@@ -36,9 +35,6 @@ class GlacierVault(CloudAuxBatchedWatcher):
 
     def __init__(self, **kwargs):
         super(GlacierVault, self).__init__(**kwargs)
-
-    def _get_regions(self):
-        return regions()
 
     def get_name_from_list_output(self, item):
         return item['VaultName']

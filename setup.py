@@ -62,12 +62,15 @@ setup(
         'dpath==1.3.2',
         'pyyaml==3.11',
         'jira==0.32',
-        'cloudaux>=1.2.6',
+        'cloudaux>=1.3.3',
         'joblib>=0.9.4',
-        'pyjwt>=1.01'
+        'pyjwt>=1.01',
+        'idna==2.5'  # Pinning to idna to avoid a dependency problem with requests.
+        # First identified as a problem by Qmando - https://github.com/requests/requests/pull/4223
     ],
     extras_require = {
         'onelogin': ['python-saml>=2.2.0'],
+        'sentry': ['raven[flask]==6.1.0'],
         'tests': [
             'nose==1.3.0',
             'mixer==5.5.7',

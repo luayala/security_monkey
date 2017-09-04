@@ -17,7 +17,7 @@ from security_monkey.datastore import Account, clear_old_exceptions, store_excep
 from security_monkey.monitors import get_monitors, get_monitors_and_dependencies, all_monitors
 from security_monkey.reporter import Reporter
 
-from security_monkey import app, db, jirasync
+from security_monkey import app, db, jirasync, sentry
 
 import traceback
 import logging
@@ -92,12 +92,12 @@ def batch_logic(monitor, current_watcher, account_name, debug):
     current_watcher.find_deleted_batch(account_name)
 
 
-def audit_changes(accounts, monitor_names, send_report, debug=True):
+def audit_changes(accounts, monitor_names, send_report, debug=True, skip_batch=True):
     for account in accounts:
         monitors = get_monitors_and_dependencies(account, monitor_names, debug)
         for monitor in monitors:
             # Skip batch support monitors... They have already been monitored.
-            if monitor.batch_support:
+            if monitor.batch_support and skip_batch:
                 continue
 
             _audit_changes(account, monitor.auditors, send_report, debug)
@@ -228,6 +228,8 @@ def setup_scheduler():
         scheduler.add_cron_job(_clear_old_exceptions, hour=3, minute=0)
 
     except Exception as e:
+        if sentry:
+            sentry.captureException()
         app.logger.warn("Scheduler Exception: {}".format(e))
         app.logger.warn(traceback.format_exc())
         store_exception("scheduler", None, e)
