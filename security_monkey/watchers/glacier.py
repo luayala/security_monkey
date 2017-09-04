@@ -28,7 +28,7 @@ from cloudaux.orchestration.aws.glacier import get_vault
 
 
 class GlacierVault(CloudAuxBatchedWatcher):
-    index = 'vault'
+    index = 'glacier'
     i_am_singular = 'Glacier Vault'
     i_am_plural = 'Glacier Vaults'
     honor_ephemerals = True
