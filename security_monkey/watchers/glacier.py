@@ -20,7 +20,7 @@
 
 """
 
-from security_monkey.cloudaux_batched_watcher import CloudAuxWatcher
+from security_monkey.cloudaux_watcher import CloudAuxWatcher
 
 from cloudaux.aws.glacier import list_vaults
 from cloudaux.orchestration.aws.glacier import get_vault
